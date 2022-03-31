@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{url('template/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{url('template/assets/vendors/owl-carousel-2/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{url('template/assets/vendors/owl-carousel-2/owl.theme.default.min.css')}}">
+
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
@@ -34,7 +35,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{url('css/custom.css')}}">
-
+    <link rel="stylesheet" href="{{url('css/datatables.css')}}">
 </head>
 
 <body>
@@ -62,7 +63,7 @@
 
         </div>
     </div>
-
+    
     <script src="{{ mix('/js/app.js') }}"></script>
 
 </body>

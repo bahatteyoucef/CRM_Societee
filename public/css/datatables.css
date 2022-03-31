@@ -1,0 +1,27 @@
+/* DataTables Overriden */
+
+.dataTables_wrapper .dataTable thead .sorting:after, 
+.dataTables_wrapper .dataTable thead .sorting_asc:after, 
+.dataTables_wrapper .dataTable thead .sorting_desc:after, 
+.dataTables_wrapper .dataTable thead .sorting_asc_disabled:after, 
+.dataTables_wrapper .dataTable thead .sorting_desc_disabled:after {
+    content : none !important;
+}
+
+
+.dataTables_wrapper .dataTable thead .sorting:before, .dataTables_wrapper 
+.dataTable thead .sorting_asc:before, .dataTables_wrapper .dataTable thead 
+.sorting_desc:before, .dataTables_wrapper .dataTable thead .sorting_asc_disabled:before, 
+.dataTables_wrapper .dataTable thead .sorting_desc_disabled:before {
+    content : none !important;
+}
+
+.paginate_button
+{
+    background-color    : #191c24   !important;
+}
+
+.paginate_button:hover
+{
+    
+}

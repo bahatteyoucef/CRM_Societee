@@ -80,6 +80,8 @@ Route::get('logout'                                                             
 Route::get('/'                                                                          ,   function()      {   return view('welcome'); });
 Route::get('home'                                                                       ,   function()      {   return redirect('/');   });
 
+Route::post('/testData'                                                                 ,   [WillayaController::class           ,'testData']);
+
 //Willayas 
 Route::post('/willayas'                                                                 ,   [WillayaController::class           ,'index']);
 

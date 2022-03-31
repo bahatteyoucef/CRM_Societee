@@ -1,93 +1,146 @@
 <template>
-  <div>
-    
-    <div class="row">
-      <div class="col-12 grid-margin">
-        <div class="card">
-          <div class="card-body">
+    <div>
+        <div class="row">
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <div
+                            class="row d-sm-flex justify-content-between align-items-start"
+                        >
+                            <div class="col-sm-6">
+                                <h4 class="card-title">Liste des structures</h4>
+                            </div>
 
-            <div class="d-sm-flex justify-content-between align-items-start">
-              <div>
-                <h4 class="card-title">List des structures</h4>
-              </div>
+                            <div id="datatables-buttons" class="col-sm-4"></div>
 
-              <div>
-                <router-link to="/structures/create" class="nav-link">
-                <button type="button" class="btn btn-outline-primary btn-fw"> Ajouter une structures </button> 
-                </router-link>
-              </div>
+                            <div id="add_button_div" class="col-sm-2">
+                                <router-link
+                                    to="/structures/create"
+                                    class="nav-link p-0"
+                                >
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary btn-fw p-2"
+                                    >
+                                        Ajouter une structures
+                                    </button>
+                                </router-link>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table id="datatable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Nom</th>
+                                        <th>Option</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr
+                                        v-for="(structure, index) in structures"
+                                        :key="structure.id"
+                                        style="background-color: #191c24"
+                                    >
+                                        <td>{{ index }}</td>
+                                        <td>{{ structure.nom }}</td>
+
+                                        <td class="row">
+                                            <router-link
+                                                :to="`/structures/${structure.id}/edit`"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-primary btn-icon mr-1 btn_options"
+                                                >
+                                                    <i
+                                                        class="mdi mdi-border-color"
+                                                        style="
+                                                            margin-left: 5px !important;
+                                                            margin-top: 5px !important;
+                                                        "
+                                                    ></i>
+                                                </button>
+                                            </router-link>
+
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-danger btn-icon btn_options"
+                                                v-on:click="deleteStructure(structure)"
+                                            >
+                                                <i
+                                                    class="mdi mdi-delete"
+                                                    style="
+                                                        margin-left: 5px !important;
+                                                    "
+                                                ></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>id</th>
-                    <th>Nom</th>
-                    <th>Option</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr v-for="(structure, index) in structures" :key="structure.id">
-                    <td>{{ index }}          </td>
-                    <td>{{ structure.nom }}         </td>
-
-                    <td>
-                      <router-link :to="`/structures/${structure.id}/edit`">
-                        <button type="button" class="btn btn-inverse-primary btn-rounded btn-icon">
-                          <i class="mdi mdi-account-box-outline" style="margin-left: 5px !important; margin-top: 9px !important;"></i>
-                        </button>
-                      </router-link>
-
-                        <button type="button" class="btn btn-inverse-danger btn-rounded btn-icon" v-on:click="deleteStructure(structure)">
-                          <i class="mdi mdi-delete" style="margin-left: 5px !important; margin-top: 9px !important;"></i>
-                        </button>
-
-                    </td>
-                  </tr>
-                </tbody>
-
-              </table>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-
-  </div>
 </template>
 
 <script>
 
+import $ from "jquery";
+
 export default {
-	data(){
-		return {
-      structures: []
-		}
-	},
-
-  mounted(){
-
-    this.$nextTick(function () {
-      this.structuresShow();
-    });
-  },
-
-  methods: {
-    async structuresShow()
-    {
-      const res     = await this.callApi('post' ,   '/structures')
-      this.structures  = res.data
+    data() {
+        return {
+            structures: [],
+        };
     },
 
-    async deleteStructure($structure)
-    {
-      const res   = await this.callApi('post' ,   '/structures/'+$structure.id+'/delete'    ,   null)
-      this.structures.splice(this.structures.indexOf($structure), 1);
-    }
-  }
+    mounted() {
+        this.$nextTick(function () {
+            this.structuresShow();
+        });
+    },
 
-}
+    methods: {
+        async structuresShow() {
 
+            fetch("/structures", {
+                method: "POST",
+            })
+            
+            .then((response) => response.json())
+            .then((data) => {
+                this.structures = data;
+
+                setTimeout(() => {
+                    $("#datatable").DataTable({
+                        dom: "Blfrtip",
+                        buttons: ["csv", "print"],
+                        columns: [
+                            null,
+                            null,
+                            { orderable: false },
+                        ],
+                    });
+
+                    this.setDefaultStyling();
+                });
+              });
+        },
+
+        async deleteStructure($structure) {
+            const res = await this.callApi(
+                "post",
+                "/structures/" + $structure.id + "/delete",
+                null
+            );
+            this.structures.splice(this.structures.indexOf($structure), 1);
+        },
+    },
+};
 </script>

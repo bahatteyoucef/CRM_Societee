@@ -44,3 +44,12 @@
     opacity: 1;
     transform: translate3d(0, 0, 0);
 }
+
+.btn_options
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:35px !important;
+    height:25px !important;
+}
