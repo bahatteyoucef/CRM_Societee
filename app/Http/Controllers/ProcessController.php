@@ -72,6 +72,27 @@ class ProcessController extends Controller
         return  Process::find($id);
     }
 
+    public function details($id)
+    {
+        $process            =   DB::table('process')
+                                    ->where('process.id',$id)
+                                    
+                                    ->select(['champ_audit.nom as champ_audit', 
+                                        'type_process.nom   as type_process',
+                                        
+                                        'process.ref        as ref',
+                                        'process.duree      as duree',              
+                                        'process.nom        as nom',
+                                        'process.id         as id'])
+                            
+                                    ->join('champ_audit'                , 'process.id_champ_audit'          , 'champ_audit.id')
+                                    ->join('type_process'               , 'process.id_type_process'         , 'type_process.id')
+                                    
+                                    ->first();
+
+        return $process; 
+    }
+
     public function update($id,Request $request)
     {
         $validator = Validator::make($request->all(), [

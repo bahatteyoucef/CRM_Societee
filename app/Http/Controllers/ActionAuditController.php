@@ -68,6 +68,25 @@ class ActionAuditController extends Controller
         return  ActionAudit::find($id);
     }
 
+    public function details($id)
+    {
+        $action_audit   =   DB::table('action_audit')
+                            ->where('action_audit.id',$id)
+                            ->select([ 
+                                'action_audit.id            as id', 
+                                'action_audit.nom           as nom', 
+                                'evaluation_audit.nom       as evaluation_audit',
+                                'constats.reference         as constat'])
+
+                            ->join('evaluation_audit'                   , 'action_audit.id_evaluation_audit'        , 'evaluation_audit.id')
+                            ->join('constats'                           , 'action_audit.id_constat'                 , 'constats.id')
+                            
+                            ->orderBy('action_audit.id','desc')
+                            ->first();
+
+        return $action_audit; 
+    }
+
     public function update($id,Request $request)
     {
         $validator = Validator::make($request->all(), [

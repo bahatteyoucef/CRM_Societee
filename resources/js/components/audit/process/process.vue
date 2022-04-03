@@ -53,6 +53,38 @@
                                         <td>{{ process.type_process }}</td>
 
                                         <td class="row">
+                                            
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-warning btn-icon mr-1 btn_options"
+                                                v-on:click="
+                                                    showProcessElements(process.id)
+                                                "
+                                            >
+                                                <i
+                                                    class="mdi mdi-airplay"
+                                                    style="
+                                                        margin-left: 5px !important;
+                                                    "
+                                                ></i>
+                                            </button>
+
+                                            <router-link
+                                                :to="`/process/${process.id}/details`"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-info btn-icon mr-1 btn_options"
+                                                >
+                                                    <i
+                                                        class="mdi mdi-file"
+                                                        style="
+                                                            margin-left: 5px !important;
+                                                        "
+                                                    ></i>
+                                                </button>
+                                            </router-link>
+
                                             <router-link
                                                 :to="`/process/${process.id}/edit`"
                                             >
@@ -69,21 +101,6 @@
                                                     ></i>
                                                 </button>
                                             </router-link>
-
-                                            <button
-                                                type="button"
-                                                class="btn btn-outline-info btn-icon mr-1 btn_options"
-                                                v-on:click="
-                                                    showProcessElements(process.id)
-                                                "
-                                            >
-                                                <i
-                                                    class="mdi mdi-file"
-                                                    style="
-                                                        margin-left: 5px !important;
-                                                    "
-                                                ></i>
-                                            </button>
 
                                             <button
                                                 type="button"

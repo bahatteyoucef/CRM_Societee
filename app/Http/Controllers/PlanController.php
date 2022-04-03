@@ -14,13 +14,17 @@ class PlanController extends Controller
     public function index()
     {
         $plans           =   DB::table('plans')
-                                ->select(['plans.id as id', 
-                                                                'plans.nom          as nom',
-                                                                'plans.date_debut   as date_debut',
-                                                                'plans.date_fin     as date_fin',
-                                                                'plans.desc         as desc',
-                                                                'societees.nom      as societee',
-                                                                'auditeurs.nom      as auditeur'])
+                                ->select([  'plans.id as id', 
+                                            'plans.nom          as nom',
+                                            'plans.date_debut   as date_debut',
+                                            'plans.date_fin     as date_fin',
+                                            'plans.desc         as desc',
+
+                                            'societees.id       as id_societee',
+                                            'societees.nom      as societee',
+
+                                            'auditeurs.id       as id_auditeur',
+                                            'auditeurs.nom      as auditeur'])
 
                                 ->join('auditeurs'              , 'plans.id_auditeur'        , 'auditeurs.id')
                                 ->join('societees'              , 'plans.id_societee'        , 'societees.id')
@@ -77,6 +81,32 @@ class PlanController extends Controller
     public function show($id)
     {
         return  Plan::find($id);
+    }
+
+    public function details($id)
+    {
+        $plans           =   DB::table('plans')
+                                ->where('plans.id',$id)
+                                ->select(['plans.id as id', 
+                                                                'plans.nom          as nom',
+                                                                'plans.date_debut   as date_debut',
+                                                                'plans.date_fin     as date_fin',
+                                                                'plans.desc         as desc',
+
+                                                                'societees.id       as id_societee',
+                                                                'societees.nom      as societee',
+
+                                                                'auditeurs.id       as id_auditeur',
+                                                                'auditeurs.nom      as auditeur',
+                                                                
+                                                                'type_audit.nom     as type_audit'])
+
+                                ->join('auditeurs'              , 'plans.id_auditeur'           , 'auditeurs.id')
+                                ->join('societees'              , 'plans.id_societee'           , 'societees.id')
+                                ->join('type_audit'             , 'plans.id_type_audit'         , 'type_audit.id')
+                                ->first();
+
+        return $plans; 
     }
 
     public function update($id,Request $request)

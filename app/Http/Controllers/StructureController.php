@@ -56,6 +56,20 @@ class StructureController extends Controller
         return response()->json('Plan has been created!');
     }
 
+    public function details($id)
+    {
+        $structures     =   DB::table('structures')
+                                ->where('structures.id',$id)
+
+                                ->select([ 
+                                    'structures.id        as id', 
+                                    'structures.nom       as nom'])
+
+                                ->first();
+
+        return $structures; 
+    }
+
     public function show($id)
     {
         return  Structure::find($id);

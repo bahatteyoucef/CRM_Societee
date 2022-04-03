@@ -16,13 +16,6 @@ class ProgramController extends Controller
     {
         $programs           =   DB::table('programs')
                                 
-                                ->join('plans'                  , 'programs.id_plan'            , 'plans.id')
-                                ->join('process'                , 'programs.id_process'         , 'process.id')
-                                ->join('auditeurs'              , 'programs.id_auditeur'        , 'auditeurs.id')
-                                ->join('auditees'               , 'programs.id_auditee'         , 'auditees.id')
-                                ->join('type_audit'             , 'programs.id_type_audit'      , 'type_audit.id')
-                                ->join('societees'              , 'programs.id_societee'        , 'societees.id')
-
                                 ->select(['programs.id      as id', 
                                     'programs.nom           as nom',
                                     'programs.ordre         as ordre',
@@ -40,6 +33,13 @@ class ProgramController extends Controller
                                     'type_audit.nom         as type_audit',
                                     'societees.nom           as societe'
                                 ])
+
+                                ->join('plans'                  , 'programs.id_plan'            , 'plans.id')
+                                ->join('process'                , 'programs.id_process'         , 'process.id')
+                                ->join('auditeurs'              , 'programs.id_auditeur'        , 'auditeurs.id')
+                                ->join('auditees'               , 'programs.id_auditee'         , 'auditees.id')
+                                ->join('type_audit'             , 'programs.id_type_audit'      , 'type_audit.id')
+                                ->join('societees'              , 'programs.id_societee'        , 'societees.id')
 
                                 ->orderBy('programs.id','desc')
                                 ->get();
@@ -150,6 +150,41 @@ class ProgramController extends Controller
                                 ->first();
 
         return $programs; 
+    }
+
+    public function details($id)
+    {
+        $programs           =   DB::table('programs')
+                                ->where('programs.id',$id)
+
+                                ->select(['programs.id      as id', 
+                                    'programs.nom           as nom',
+                                    'programs.ordre         as ordre',
+
+                                    'programs.date_debut    as date_debut',
+                                    'programs.date_fin      as date_fin',
+                                    'programs.heure_debut   as heure_debut', 
+                                    'programs.heure_fin     as heure_fin',
+                                    'programs.description   as description',
+                                    
+                                    'plans.nom              as plan',     
+                                    'process.nom            as process',
+                                    'auditeurs.nom          as auditeur',
+                                    'auditees.nom           as auditee',              
+                                    'type_audit.nom         as type_audit',
+                                    'societees.nom          as societee'
+                                ])
+
+                                ->join('plans'                  , 'programs.id_plan'            , 'plans.id')
+                                ->join('process'                , 'programs.id_process'         , 'process.id')
+                                ->join('auditeurs'              , 'programs.id_auditeur'        , 'auditeurs.id')
+                                ->join('auditees'               , 'programs.id_auditee'         , 'auditees.id')
+                                ->join('type_audit'             , 'programs.id_type_audit'      , 'type_audit.id')
+                                ->join('societees'              , 'programs.id_societee'        , 'societees.id')
+
+                                ->first();
+
+        return $programs;    
     }
 
     public function update($id,Request $request)

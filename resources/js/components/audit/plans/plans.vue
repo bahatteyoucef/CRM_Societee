@@ -56,13 +56,49 @@
                                         <td>{{ plan.date_fin }}</td>
 
                                         <td>{{ plan.nom }}</td>
-                                        <td>{{ plan.auditeur }}</td>
+              
+                                        <td>
+                                            <router-link :to="`/auditeurs/${plan.id_auditeur}/details`">
+                                                {{ plan.auditeur }}     
+                                            </router-link>    
+                                        </td>
 
                                         <td>{{ plan.societee }}</td>
 
                                         <td>{{ plan.desc }}</td>
 
                                         <td class="row">
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-warning btn-icon mr-1 btn_options"
+                                                v-on:click="
+                                                    showPlanPrograms(plan.id)
+                                                "
+                                            >
+                                                <i
+                                                    class="mdi mdi-airplay"
+                                                    style="
+                                                        margin-left: 5px !important;
+                                                    "
+                                                ></i>
+                                            </button>
+
+                                            <router-link
+                                                :to="`/plans/${plan.id}/details`"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-info btn-icon mr-1 btn_options"
+                                                >
+                                                    <i
+                                                        class="mdi mdi-file"
+                                                        style="
+                                                            margin-left: 5px !important;
+                                                        "
+                                                    ></i>
+                                                </button>
+                                            </router-link>
+
                                             <router-link
                                                 :to="`/plans/${plan.id}/edit`"
                                             >
@@ -79,21 +115,6 @@
                                                     ></i>
                                                 </button>
                                             </router-link>
-
-                                            <button
-                                                type="button"
-                                                class="btn btn-outline-info btn-icon mr-1 btn_options"
-                                                v-on:click="
-                                                    showPlanPrograms(plan.id)
-                                                "
-                                            >
-                                                <i
-                                                    class="mdi mdi-file"
-                                                    style="
-                                                        margin-left: 5px !important;
-                                                    "
-                                                ></i>
-                                            </button>
 
                                             <button
                                                 type="button"
@@ -148,7 +169,7 @@ export default {
     mounted() {
         this.$nextTick(function () {
             this.plansShow();
-        });
+        })
     },
 
     methods: {

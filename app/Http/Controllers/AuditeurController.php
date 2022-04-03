@@ -90,6 +90,33 @@ class AuditeurController extends Controller
         return  Auditeur::find($id);
     }
 
+    public function details($id)
+    {
+        $auditeur      =   DB::table('auditeurs')
+                                ->where("auditeurs.id",$id)
+                                ->select([ 
+                                    'auditeurs.id       as id', 
+                                    'auditeurs.nom      as nom',
+                                    'auditeurs.prenom   as prenom',
+                                    'auditeurs.email    as email',
+                                    
+                                    'fonctions.id       as id_fonction', 
+                                    'fonctions.nom      as fonction',
+
+                                    'structures.id      as id_structure', 
+                                    'structures.nom     as structure',
+                                    
+                                    'societees.nom      as societee',])
+                                
+                                ->join('fonctions'                  , 'auditeurs.id_fonction'               , 'fonctions.id')
+                                ->join('structures'                 , 'auditeurs.id_structure'              , 'structures.id')
+                                ->join('societees'                  , 'auditeurs.id_societee'               , 'societees.id')
+
+                                ->first();
+
+        return $auditeur; 
+    }
+
     public function update($id,Request $request)
     {
         $validator = Validator::make($request->all(), [

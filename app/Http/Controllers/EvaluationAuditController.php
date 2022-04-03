@@ -6,16 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\EvaluationAudit;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class EvaluationAuditController extends Controller
 {
     public function index()
     {
-        return EvaluationAudit::select([ 
-            'evaluation_audit.id     as id', 
-            'evaluation_audit.nom    as nom'])
-        ->orderBy('evaluation_audit.id','desc')
-        ->get();
+        $evaluation_audit       =   DB::table('evaluation_audit')
+
+                                    ->select([    
+                                            'evaluation_audit.id     as id', 
+                                            'evaluation_audit.nom    as nom'
+                                        ])
+                        
+                                ->orderBy('evaluation_audit.id','desc')
+                                ->get();
+
+        return $evaluation_audit;  
     }
 
     public function combobox()
@@ -46,6 +53,21 @@ class EvaluationAuditController extends Controller
         $evaluation_audit->save();
 
         return response()->json('Plan has been created!');
+    }
+
+    public function details($id)
+    {
+        $evaluation_audit       =   DB::table('evaluation_audit')
+                                    ->where("evaluation_audit.id",$id)
+
+                                    ->select([    
+                                            'evaluation_audit.id     as id', 
+                                            'evaluation_audit.nom    as nom'
+                                        ])
+                        
+                                ->first();
+
+        return $evaluation_audit;  
     }
 
     public function show($id)

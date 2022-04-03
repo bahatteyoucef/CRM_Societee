@@ -14,11 +14,12 @@ class ElementProcessController extends Controller
     {
         $element_process    =   DB::table('element_process')
         
-                                ->select(['element_process.id       as id', 
-                                'element_process.nom                as nom',
-                                'element_process.desc               as desc',
-                                'process.nom                        as process',
-                                'etat_audit.nom                     as etat_audit'
+                                ->select([
+                                    'element_process.id                 as id', 
+                                    'element_process.nom                as nom',
+                                    'element_process.desc               as desc',
+                                    'process.nom                        as process',
+                                    'etat_audit.nom                     as etat_audit'
                                 ])
 
                                 ->join('process'    ,'element_process.id_process'       ,'process.id')
@@ -63,6 +64,27 @@ class ElementProcessController extends Controller
         $element_process->save();
 
         return response()->json('Plan has been created!');
+    }
+
+    public function details($id)
+    {
+        $element_process    =   DB::table('element_process')
+                                ->where('element_process.id',$id)
+                                
+                                ->select([
+                                    'element_process.id                 as id', 
+                                    'element_process.nom                as nom',
+                                    'element_process.desc               as desc',
+                                    'process.nom                        as process',
+                                    'etat_audit.nom                     as etat_audit'
+                                ])
+
+                                ->join('process'    ,'element_process.id_process'       ,'process.id')
+                                ->join('etat_audit' ,'element_process.id_etat_audit'    ,'etat_audit.id')
+                                
+                                ->first();
+
+        return $element_process;
     }
 
     public function show($id)

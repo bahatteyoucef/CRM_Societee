@@ -75,7 +75,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 */
 
 Auth::routes();
-Route::get('logout'                                                                     ,   [LogoutController::class,'logout_user'])->name('logout');
+
+Route::post('logout'                                                                     ,   [LogoutController::class,'logout_user'])->name('logout');
 
 Route::get('/'                                                                          ,   function()      {   return view('welcome'); });
 Route::get('home'                                                                       ,   function()      {   return redirect('/');   });
@@ -167,6 +168,7 @@ Route::post('/clients/devis/store'                                              
 Route::post('/plans'                                                                    ,   [PlanController::class,'index']);
 Route::post('/plans/combobox'                                                           ,   [PlanController::class,'combobox']);
 Route::post('/plans/{id}/show'                                                          ,   [PlanController::class,'show']);
+Route::post('/plans/{id}/details'                                                       ,   [PlanController::class,'details']);
 Route::post('/plans/store'                                                              ,   [PlanController::class,'store']);
 Route::post('/plans/{id}/update'                                                        ,   [PlanController::class,'update']);
 Route::post('/plans/{id}/delete'                                                        ,   [PlanController::class,'delete']);
@@ -175,6 +177,7 @@ Route::post('/plans/{id}/delete'                                                
 Route::post('/process'                                                                  ,   [ProcessController::class,'index']);
 Route::post('/process/combobox'                                                         ,   [ProcessController::class,'combobox']);
 Route::post('/process/{id}/show'                                                        ,   [ProcessController::class,'show']);
+Route::post('/process/{id}/details'                                                     ,   [ProcessController::class,'details']);
 Route::post('/process/store'                                                            ,   [ProcessController::class,'store']);
 Route::post('/process/{id}/update'                                                      ,   [ProcessController::class,'update']);
 Route::post('/process/{id}/delete'                                                      ,   [ProcessController::class,'delete']);
@@ -183,6 +186,7 @@ Route::post('/process/{id}/delete'                                              
 Route::post('/programs'                                                                 ,   [ProgramController::class,'index']);
 Route::post('/programs/combobox'                                                        ,   [ProgramController::class,'combobox']);
 Route::post('/programs/{id}/show'                                                       ,   [ProgramController::class,'show']);
+Route::post('/programs/{id}/details'                                                    ,   [ProgramController::class,'details']);
 Route::post('/programs/store'                                                           ,   [ProgramController::class,'store']);
 Route::post('/programs/{id}/update'                                                     ,   [ProgramController::class,'update']);
 Route::post('/programs/{id}/delete'                                                     ,   [ProgramController::class,'delete']);
@@ -191,6 +195,7 @@ Route::post('/programs/{id}/delete'                                             
 Route::post('/type_process'                                                             ,   [TypeProcessController::class,'index']);
 Route::post('/type_process/combobox'                                                    ,   [TypeProcessController::class,'combobox']);
 Route::post('/type_process/{id}/show'                                                   ,   [TypeProcessController::class,'show']);
+Route::post('/type_process/{id}/details'                                                ,   [TypeProcessController::class,'details']);
 Route::post('/type_process/store'                                                       ,   [TypeProcessController::class,'store']);
 Route::post('/type_process/{id}/update'                                                 ,   [TypeProcessController::class,'update']);
 Route::post('/type_process/{id}/delete'                                                 ,   [TypeProcessController::class,'delete']);
@@ -199,6 +204,7 @@ Route::post('/type_process/{id}/delete'                                         
 Route::post('/element_process'                                                          ,   [ElementProcessController::class,'index']);
 Route::post('/element_process/combobox'                                                 ,   [ElementProcessController::class,'combobox']);
 Route::post('/element_process/{id}/show'                                                ,   [ElementProcessController::class,'show']);
+Route::post('/element_process/{id}/details'                                             ,   [ElementProcessController::class,'details']);
 Route::post('/element_process/store'                                                    ,   [ElementProcessController::class,'store']);
 Route::post('/element_process/{id}/update'                                              ,   [ElementProcessController::class,'update']);
 Route::post('/element_process/{id}/delete'                                              ,   [ElementProcessController::class,'delete']);
@@ -207,6 +213,7 @@ Route::post('/element_process/{id}/delete'                                      
 Route::post('/etat_audit'                                                               ,   [EtatAuditController::class,'index']);
 Route::post('/etat_audit/combobox'                                                      ,   [EtatAuditController::class,'combobox']);
 Route::post('/etat_audit/{id}/show'                                                     ,   [EtatAuditController::class,'show']);
+Route::post('/etat_audit/{id}/details'                                                  ,   [EtatAuditController::class,'details']);
 Route::post('/etat_audit/store'                                                         ,   [EtatAuditController::class,'store']);
 Route::post('/etat_audit/{id}/update'                                                   ,   [EtatAuditController::class,'update']);
 Route::post('/etat_audit/{id}/delete'                                                   ,   [EtatAuditController::class,'delete']);
@@ -215,46 +222,52 @@ Route::post('/etat_audit/{id}/delete'                                           
 Route::post('/champ_audit'                                                              ,   [ChampAuditController::class,'index']);
 Route::post('/champ_audit/combobox'                                                     ,   [ChampAuditController::class,'combobox']);
 Route::post('/champ_audit/{id}/show'                                                    ,   [ChampAuditController::class,'show']);
+Route::post('/champ_audit/{id}/details'                                                 ,   [ChampAuditController::class,'details']);
 Route::post('/champ_audit/store'                                                        ,   [ChampAuditController::class,'store']);
 Route::post('/champ_audit/{id}/update'                                                  ,   [ChampAuditController::class,'update']);
 Route::post('/champ_audit/{id}/delete'                                                  ,   [ChampAuditController::class,'delete']);
 
-//Champ Audit
-Route::post('/evaluation_audit'                                                              ,   [EvaluationAuditController::class,'index']);
-Route::post('/evaluation_audit/combobox'                                                     ,   [EvaluationAuditController::class,'combobox']);
-Route::post('/evaluation_audit/{id}/show'                                                    ,   [EvaluationAuditController::class,'show']);
-Route::post('/evaluation_audit/store'                                                        ,   [EvaluationAuditController::class,'store']);
-Route::post('/evaluation_audit/{id}/update'                                                  ,   [EvaluationAuditController::class,'update']);
-Route::post('/evaluation_audit/{id}/delete'                                                  ,   [EvaluationAuditController::class,'delete']);
+//Evaluation Audit
+Route::post('/evaluation_audit'                                                         ,   [EvaluationAuditController::class,'index']);
+Route::post('/evaluation_audit/combobox'                                                ,   [EvaluationAuditController::class,'combobox']);
+Route::post('/evaluation_audit/{id}/show'                                               ,   [EvaluationAuditController::class,'show']);
+Route::post('/evaluation_audit/{id}/details'                                            ,   [EvaluationAuditController::class,'details']);
+Route::post('/evaluation_audit/store'                                                   ,   [EvaluationAuditController::class,'store']);
+Route::post('/evaluation_audit/{id}/update'                                             ,   [EvaluationAuditController::class,'update']);
+Route::post('/evaluation_audit/{id}/delete'                                             ,   [EvaluationAuditController::class,'delete']);
 
 //Auditees
 Route::post('/auditees'                                                                 ,   [AuditeeController::class,'index']);
 Route::post('/auditees/combobox'                                                        ,   [AuditeeController::class,'combobox']);
 Route::post('/auditees/{id}/show'                                                       ,   [AuditeeController::class,'show']);
+Route::post('/auditees/{id}/details'                                                    ,   [AuditeeController::class,'details']);
 Route::post('/auditees/store'                                                           ,   [AuditeeController::class,'store']);
 Route::post('/auditees/{id}/update'                                                     ,   [AuditeeController::class,'update']);
 Route::post('/auditees/{id}/delete'                                                     ,   [AuditeeController::class,'delete']);
 
 //Auditeurs
-Route::post('/auditeurs'                                                                 ,   [AuditeurController::class,'index']);
-Route::post('/auditeurs/combobox'                                                        ,   [AuditeurController::class,'combobox']);
-Route::post('/auditeurs/{id}/show'                                                       ,   [AuditeurController::class,'show']);
-Route::post('/auditeurs/store'                                                           ,   [AuditeurController::class,'store']);
-Route::post('/auditeurs/{id}/update'                                                     ,   [AuditeurController::class,'update']);
-Route::post('/auditeurs/{id}/delete'                                                     ,   [AuditeurController::class,'delete']);
+Route::post('/auditeurs'                                                                ,   [AuditeurController::class,'index']);
+Route::post('/auditeurs/combobox'                                                       ,   [AuditeurController::class,'combobox']);
+Route::post('/auditeurs/{id}/show'                                                      ,   [AuditeurController::class,'show']);
+Route::post('/auditeurs/{id}/details'                                                   ,   [AuditeurController::class,'details']);
+Route::post('/auditeurs/store'                                                          ,   [AuditeurController::class,'store']);
+Route::post('/auditeurs/{id}/update'                                                    ,   [AuditeurController::class,'update']);
+Route::post('/auditeurs/{id}/delete'                                                    ,   [AuditeurController::class,'delete']);
 
 //Societees
-Route::post('/societees'                                                                 ,   [SocieteeController::class,'index']);
-Route::post('/societees/combobox'                                                        ,   [SocieteeController::class,'combobox']);
-Route::post('/societees/{id}/show'                                                       ,   [SocieteeController::class,'show']);
-Route::post('/societees/store'                                                           ,   [SocieteeController::class,'store']);
-Route::post('/societees/{id}/update'                                                     ,   [SocieteeController::class,'update']);
-Route::post('/societees/{id}/delete'                                                     ,   [SocieteeController::class,'delete']);
+Route::post('/societees'                                                                ,   [SocieteeController::class,'index']);
+Route::post('/societees/combobox'                                                       ,   [SocieteeController::class,'combobox']);
+Route::post('/societees/{id}/show'                                                      ,   [SocieteeController::class,'show']);
+Route::post('/societees/{id}/details'                                                   ,   [SocieteeController::class,'details']);
+Route::post('/societees/store'                                                          ,   [SocieteeController::class,'store']);
+Route::post('/societees/{id}/update'                                                    ,   [SocieteeController::class,'update']);
+Route::post('/societees/{id}/delete'                                                    ,   [SocieteeController::class,'delete']);
 
 //Type Audit
 Route::post('/type_audit'                                                               ,   [TypeAuditController::class,'index']);
 Route::post('/type_audit/combobox'                                                      ,   [TypeAuditController::class,'combobox']);
 Route::post('/type_audit/{id}/show'                                                     ,   [TypeAuditController::class,'show']);
+Route::post('/type_audit/{id}/details'                                                  ,   [TypeAuditController::class,'details']);
 Route::post('/type_audit/store'                                                         ,   [TypeAuditController::class,'store']);
 Route::post('/type_audit/{id}/update'                                                   ,   [TypeAuditController::class,'update']);
 Route::post('/type_audit/{id}/delete'                                                   ,   [TypeAuditController::class,'delete']);
@@ -263,6 +276,7 @@ Route::post('/type_audit/{id}/delete'                                           
 Route::post('/fonctions'                                                                ,   [FonctionController::class,'index']);
 Route::post('/fonctions/combobox'                                                       ,   [FonctionController::class,'combobox']);
 Route::post('/fonctions/{id}/show'                                                      ,   [FonctionController::class,'show']);
+Route::post('/fonctions/{id}/details'                                                   ,   [FonctionController::class,'details']);
 Route::post('/fonctions/store'                                                          ,   [FonctionController::class,'store']);
 Route::post('/fonctions/{id}/update'                                                    ,   [FonctionController::class,'update']);
 Route::post('/fonctions/{id}/delete'                                                    ,   [FonctionController::class,'delete']);
@@ -271,6 +285,7 @@ Route::post('/fonctions/{id}/delete'                                            
 Route::post('/structures'                                                               ,   [StructureController::class,'index']);
 Route::post('/structures/combobox'                                                      ,   [StructureController::class,'combobox']);
 Route::post('/structures/{id}/show'                                                     ,   [StructureController::class,'show']);
+Route::post('/structures/{id}/details'                                                  ,   [StructureController::class,'details']);
 Route::post('/structures/store'                                                         ,   [StructureController::class,'store']);
 Route::post('/structures/{id}/update'                                                   ,   [StructureController::class,'update']);
 Route::post('/structures/{id}/delete'                                                   ,   [StructureController::class,'delete']);
@@ -280,15 +295,17 @@ Route::post('/structures/{id}/delete'                                           
 Route::post('/constats'                                                                 ,   [ConstatController::class,'index']);
 Route::post('/constats/combobox'                                                        ,   [ConstatController::class,'combobox']);
 Route::post('/constats/{id}/show'                                                       ,   [ConstatController::class,'show']);
+Route::post('/constats/{id}/details'                                                    ,   [ConstatController::class,'details']);
 Route::post('/constats/store'                                                           ,   [ConstatController::class,'store']);
 Route::post('/constats/{id}/update'                                                     ,   [ConstatController::class,'update']);
 Route::post('/constats/{id}/delete'                                                     ,   [ConstatController::class,'delete']);
 ///
 
-//Constats
+//Action Audit
 Route::post('/action_audit'                                                             ,   [ActionAuditController::class,'index']);
 Route::post('/action_audit/combobox'                                                    ,   [ActionAuditController::class,'combobox']);
 Route::post('/action_audit/{id}/show'                                                   ,   [ActionAuditController::class,'show']);
+Route::post('/action_audit/{id}/details'                                                ,   [ActionAuditController::class,'details']);
 Route::post('/action_audit/store'                                                       ,   [ActionAuditController::class,'store']);
 Route::post('/action_audit/{id}/update'                                                 ,   [ActionAuditController::class,'update']);
 Route::post('/action_audit/{id}/delete'                                                 ,   [ActionAuditController::class,'delete']);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use App\Models\Societee;
 
@@ -11,11 +13,17 @@ class SocieteeController extends Controller
 {
     public function index()
     {
-        return Societee::select([ 
-            'societees.id     as id', 
-            'societees.nom    as nom'])
-        ->orderBy('societees.id','desc')
-        ->get();
+        $societees  =   DB::table('societees')
+
+                            ->select([ 
+                                'societees.id     as id', 
+                                'societees.nom    as nom']
+                            )
+
+                            ->orderBy('societees.id','desc')
+                            ->get();
+
+        return $societees; 
     }
 
     public function combobox()
@@ -46,6 +54,21 @@ class SocieteeController extends Controller
         $societee->save();
 
         return response()->json('Societee has been created!');
+    }
+
+    public function details($id)
+    {
+        $societees  =   DB::table('societees')
+                            ->where('societees.id',$id)
+
+                            ->select([ 
+                                'societees.id     as id', 
+                                'societees.nom    as nom'
+                            ])
+
+                            ->first();
+
+        return $societees; 
     }
 
     public function show($id)

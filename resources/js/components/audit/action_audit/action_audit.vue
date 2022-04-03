@@ -73,6 +73,22 @@
                                                 </button>
                                             </router-link>
 
+                                            <router-link
+                                                :to="`/action_audit/${action_audit.id}/details`"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-info btn-icon mr-1 btn_options"
+                                                >
+                                                    <i
+                                                        class="mdi mdi-file"
+                                                        style="
+                                                            margin-left: 5px !important;
+                                                        "
+                                                    ></i>
+                                                </button>
+                                            </router-link>
+
                                             <button
                                                 type="button"
                                                 class="btn btn-outline-danger btn-icon btn_options"

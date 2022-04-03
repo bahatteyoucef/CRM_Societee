@@ -5,17 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\TypeProcess;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Validator;
 
 class TypeProcessController extends Controller
 {
     public function index()
     {
-        return TypeProcess::select([ 
-                'type_process.id     as id', 
-                'type_process.nom    as nom'])
-            ->orderBy('type_process.id','desc')
-            ->get();
+        $type_process           =   DB::table('type_process')
+                                        ->select([
+                                            'type_process.id as id', 
+                                            'type_process.nom          as nom'
+                                        ])
+
+                                ->orderBy('type_process.id','desc')
+                                ->get();
+
+        return $type_process; 
     }
 
     public function combobox()
@@ -46,6 +53,21 @@ class TypeProcessController extends Controller
         $type_process->save();
 
         return response()->json('Plan has been created!');
+    }
+
+    public function details($id)
+    {
+        $type_process           =   DB::table('type_process')
+                                        ->where("type_process.id",$id)
+
+                                        ->select([
+                                            'type_process.id as id', 
+                                            'type_process.nom          as nom'
+                                        ])
+                                
+                                    ->first();
+
+        return $type_process; 
     }
 
     public function show($id)

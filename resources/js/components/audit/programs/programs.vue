@@ -75,6 +75,23 @@
                                         <td>{{ program.description }}</td>
 
                                         <td class="row">
+                                            
+                                            <router-link
+                                                :to="`/programs/${program.id}/details`"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-info btn-icon mr-1 btn_options"
+                                                >
+                                                    <i
+                                                        class="mdi mdi-file"
+                                                        style="
+                                                            margin-left: 5px !important;
+                                                        "
+                                                    ></i>
+                                                </button>
+                                            </router-link>
+
                                             <router-link
                                                 :to="`/programs/${program.id}/edit`"
                                             >

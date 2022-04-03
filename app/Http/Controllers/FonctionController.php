@@ -55,6 +55,20 @@ class FonctionController extends Controller
         return response()->json('Fonction has been created!');
     }
 
+    public function details($id)
+    {
+        $fonctions   =      DB::table('fonctions')
+                                ->where('fonctions.id',$id)
+
+                                ->select([ 
+                                    'fonctions.id        as id', 
+                                    'fonctions.nom       as nom'])
+
+                                ->first();
+
+        return $fonctions; 
+    }
+
     public function show($id)
     {
         return  Fonction::find($id);

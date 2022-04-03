@@ -13,12 +13,15 @@ class ConstatController extends Controller
     public function index()
     {
         $constats   =     DB::table('constats')
-                            ->join('programs'                   , 'constats.id_program'                 , 'programs.id')
-                            ->join('element_process'            , 'constats.id_element_process'         , 'element_process.id')
+                            
                             ->select([ 
                                 'constats.id            as id', 
                                 'programs.nom           as program', 
-                                'element_process.nom    as element_process',])
+                                'element_process.nom    as element_process'])
+
+                            ->join('programs'                   , 'constats.id_program'                 , 'programs.id')
+                            ->join('element_process'            , 'constats.id_element_process'         , 'element_process.id')
+                            
                             ->orderBy('constats.id','desc')
                             ->get();
 
@@ -59,6 +62,24 @@ class ConstatController extends Controller
         $constat->save();
 
         return response()->json('Plan has been created!');
+    }
+
+    public function details($id)
+    {
+        $constats   =     DB::table('constats')
+                            ->where('constats.id',$id)
+
+                            ->select([ 
+                                'constats.id            as id', 
+                                'programs.nom           as program', 
+                                'element_process.nom    as element_process'])
+
+                            ->join('programs'                   , 'constats.id_program'                 , 'programs.id')
+                            ->join('element_process'            , 'constats.id_element_process'         , 'element_process.id')
+                            
+                            ->first();
+
+        return $constats; 
     }
 
     public function show($id)

@@ -77,6 +77,33 @@ class AuditeeController extends Controller
         return response()->json('Auditee has been created!');
     }
 
+    public function details($id)
+    {
+        $auditees   =   DB::table('auditees')
+                        ->where('auditees.id',$id)
+
+                        ->select([ 
+                            'auditees.id        as id', 
+                            'auditees.nom       as nom',
+                            'auditees.prenom    as prenom',
+                            
+                            'fonctions.id       as id_fonction', 
+                            'fonctions.nom      as fonction',
+
+                            'structures.id      as id_structure', 
+                            'structures.nom     as structure',
+                            
+                            'societees.nom      as societee'])
+
+                            ->join('fonctions'                  , 'auditees.id_fonction'            , 'fonctions.id')
+                            ->join('structures'                 , 'auditees.id_structure'           , 'structures.id')
+                            ->join('societees'                  , 'auditees.id_societee'            , 'societees.id')
+
+                        ->first();
+
+        return $auditees; 
+    }
+
     public function show($id)
     {
         return  Auditee::find($id);
